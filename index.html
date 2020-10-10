@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- style -->
+    <link rel="stylesheet" href="css/style.css">
+    <title>Consultar Preço</title>
+</head>
+<body>
+    <header>
+        <h1>Consultar preço de entregas dos correios</h1>
+    </header>
+    <main>
+        <section>
+            <form method="post" name="form1" id="form1">
+
+                <label for="cepO">Cep origem*:</label>
+                <input type="text" name="cepO" id="cepO" required>
+
+                <label for="cepD">Cep destino*:</label>
+                <input type="text" name="cepD" id="cepD" required>
+
+                <label for="peso">Peso*:</label>
+                <input type="text" name="peso" id="peso" required>
+
+                <label for="formato">Embalagem:</label>
+                <select name="formato" id="formato" required>
+                    <option value="1">Caixa/Pacote</option>
+                    <option value="2">Rolo/Prisma</option>
+                    <option value="3">Envelope</option>
+                </select>
+
+                <label for="comprimento">Comprimento*:</label>
+                <input type="text" name="comprimento" id="comprimento" required>
+
+                <label for="altura">Altura*:</label>
+                <input type="text" name="altura" id="altura" required>
+
+                <label for="largura">Largura*:</label>
+                <input type="text" name="largura" id="largura" required>
+
+                <div class="radio">
+                    <span>Aviso recebimento*:</span>
+                    <input type="radio" name="aviso" id="avisoS" value="s"> <span>Sim</span>
+                    <input type="radio" name="aviso" id="avisoN" value="n"> <span>Não</span>
+                </div>
+
+                <div class="envio">
+                   <span>Envio:</span>
+                    <select name="codigo" id="codigo">
+                        <option value="40010">SEDEX</option>
+                        <option value="41106">PAC</option>
+                    </select>
+                </div>
+
+                <label for="diametro">Diametro:</label>
+                <input type="text" name="diametro" id="diametro">
+
+                <input type="submit" value="Consultar" class="btn">
+
+                <span id="response"></span>
+            </form>
+            <div class="col">
+                <article>
+                    <h3>Obs:</h3>
+                    <p>Preços praticados no balcão, para poder obter uma diferença de preços recomenda-se adicionar informações adicionais do seu contrato na hora de fazer a requisição, como <em>código administrativo junto à ECT</em> e <em>senha associada ao seu código administrativo.</em></p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+       $(function(){
+            
+            var cepOrigem = validarCep($("#cepO"),'cepO');
+            var cepDestino = validarCep($("#cepD"),'cepD');
+
+            $("#form1").submit(function(e){
+                e.preventDefault();
+
+                $form = $(this).serialize();
+
+                $.ajax({
+                    url: "processa.php",
+                    type: "POST",
+                    data: $form,
+                    dataType: "html",
+                    beforeSend: function()
+                    {
+                        $("#response").html("Processando...");
+                    },
+                    success: function(data)
+                    {
+                        $("#response").html(data)
+                        console.log(data)
+                    },
+                    error: function()
+                    {
+                        alert("error interno contate o suporte");
+                    }
+                });
+
+                return false;
+            })
+       });
+
+       function validarCep(obj,id)
+       {
+            obj.blur(function(){
+
+                var cep = $(this).val();
+                cep = cep.replace('-','');
+
+                if(!Number(cep))
+                {
+                    document.getElementById(id).style.background = "red";
+                    return;
+                }
+                else
+                {   
+                    var teste = document.getElementById(id).style.background = "white";
+
+                    
+                    console.log(cep);
+                }
+
+            });
+
+       }
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+    "name": "root/consultar_preco_entrega",
+    "description": "Consultar preço de entrega dos correios",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "walesonn",
+            "email": "walesonmelo0000@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    }
+}
