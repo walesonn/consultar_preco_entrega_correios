@@ -43,7 +43,7 @@ class Request{
         $response = simplexml_load_string(curl_exec($ch));
 
         
-        echo "valor = R$ ".$response->cServico->Valor."\n".
+        echo "valor = R$ ".$response->cServico->Valor."<br>".
         "prazoEntrega = ".$response->cServico->PrazoEntrega. " dias";
         
     }

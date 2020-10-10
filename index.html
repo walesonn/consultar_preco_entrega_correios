@@ -21,7 +21,7 @@
                 <label for="cepD">Cep destino*:</label>
                 <input type="text" name="cepD" id="cepD" required>
 
-                <label for="peso">Peso*:</label>
+                <label for="peso">Peso (kg)*:</label>
                 <input type="text" name="peso" id="peso" required>
 
                 <label for="formato">Embalagem:</label>
@@ -43,7 +43,7 @@
                 <div class="radio">
                     <span>Aviso recebimento*:</span>
                     <input type="radio" name="aviso" id="avisoS" value="s"> <span>Sim</span>
-                    <input type="radio" name="aviso" id="avisoN" value="n"> <span>Não</span>
+                    <input type="radio" name="aviso" id="avisoN" value="n" checked> <span>Não</span>
                 </div>
 
                 <div class="envio">
@@ -55,7 +55,7 @@
                 </div>
 
                 <label for="diametro">Diametro:</label>
-                <input type="text" name="diametro" id="diametro">
+                <input type="text" name="diametro" id="diametro" value="0">
 
                 <input type="submit" value="Consultar" class="btn">
 
@@ -76,6 +76,11 @@
             
             var cepOrigem = validarCep($("#cepO"),'cepO');
             var cepDestino = validarCep($("#cepD"),'cepD');
+            var peso = validar($("#peso"));
+            var comprimento = validar($("#comprimento"));
+            var altura = validar($("#altura"));
+            var largura = validar($("#largura"));
+            var diametro = validar($("#diametro"));
 
             $("#form1").submit(function(e){
                 e.preventDefault();
@@ -113,21 +118,40 @@
                 var cep = $(this).val();
                 cep = cep.replace('-','');
 
-                if(!Number(cep))
+                if(!Number(cep) || cep.length < 8)
                 {
                     document.getElementById(id).style.background = "red";
                     return;
                 }
                 else
                 {   
-                    var teste = document.getElementById(id).style.background = "white";
+                    document.getElementById(id).style.background = "white";
 
-                    
                     console.log(cep);
+                    return cep;
                 }
 
             });
+       }
 
+       function validar(obj)
+       {
+            obj.blur(function(){
+
+                var value = $(this).val();
+                value = value.replace(",",".");
+
+                var regex = /^[0-9.]{1,}$/;
+
+                if(!regex.test(value))
+                {
+                    obj.css("background","red");
+                    return;
+                }
+                obj.css("background","white");
+                console.log(value);
+                return value;
+            });
        }
     </script>
 </body>

@@ -26,7 +26,8 @@ form {
     display: inline-flex;
     align-items: center; }
     form .radio input {
-      box-shadow: none; }
+      box-shadow: none;
+      margin-left: 10px; }
   form .envio {
     display: inline-flex;
     margin-top: 10px;
@@ -53,7 +54,8 @@ input {
   border-radius: 5px;
   border: 0px;
   box-shadow: 1px 1px 1px grey;
-  font-size: 20px; }
+  font-size: 20px;
+  text-align: center; }
 
 section {
   width: 100%;
